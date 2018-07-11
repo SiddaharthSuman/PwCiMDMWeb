@@ -8,9 +8,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/components/home/home.component';
 import { PageNotFoundComponent } from './pages/components/page-not-found/page-not-found.component';
 import { ComponentsModule } from './pages/components/components.module';
+import { LoginComponent } from './pages/components/login/login.component';
+import { RegisterComponent } from './pages/components/register/register.component';
+import { ServicesModule } from './pages/services/services.module';
 
 export const routes: Routes = [
   { path: 'Home', component: HomeComponent },
+  { path: 'Login', component: LoginComponent },
+  { path: 'Register', component: RegisterComponent },
   { path: '', redirectTo: '/Home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -23,7 +28,8 @@ export const routes: Routes = [
     BrowserModule,
     QRCodeModule,
     RouterModule.forRoot(routes),
-    ComponentsModule
+    ComponentsModule,
+    ServicesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
