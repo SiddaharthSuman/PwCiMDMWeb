@@ -5,11 +5,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    QRCodeModule
   ],
   declarations: [HomeComponent, PageNotFoundComponent, LoginComponent, RegisterComponent]
 })

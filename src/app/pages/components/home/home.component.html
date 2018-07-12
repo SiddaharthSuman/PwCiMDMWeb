@@ -1,5 +1,12 @@
-<div class="row">
-  <div class="col">
-    <p>This will be the dashboard</p>
+<div  *ngIf="code">
+  <div class="row">
+    <div class="col">
+      <p>Please scan the below code in the IPhone you want to reserve</p>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-3">
+      <qrcode [qrdata]="code" [size]="256" [level]="'L'"></qrcode>
+    </div>
   </div>
 </div>
