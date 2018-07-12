@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LoginUserModel } from '../../models/login-user.model';
 
 @Injectable()
 export class LoginService {
 
   private readonly ERROR_ILLEGAL_CHARS = 'The username or password you have entered has illegal characters in it, please enter valid data!';
   private readonly ERROR_USERNAME_PASSWORD_INCORRECT = 'The username or password you have entered is incorrect!';
+  private readonly ERROR_ACCOUNT_INACTIVE = 'This account has not been activated yet. Please contact the administrator!';
 
   private readonly METHOD_LOGIN_WEB_USER = 'loginWebUser';
   private readonly METHOD_CHECK_SESSION_ID = 'checkSessionId';
@@ -13,6 +15,7 @@ export class LoginService {
   registerURL = 'https://pwcimdm-server.000webhostapp.com/registration.php';
 
   isLoggedIn: boolean;
+  currentUser: LoginUserModel;
 
   constructor(private http: HttpClient) { }
 
@@ -23,6 +26,8 @@ export class LoginService {
         return Promise.reject(this.ERROR_ILLEGAL_CHARS);
       } else if (response === this.ERROR_USERNAME_PASSWORD_INCORRECT) {
         return Promise.reject(this.ERROR_USERNAME_PASSWORD_INCORRECT);
+      } else if (response === this.ERROR_ACCOUNT_INACTIVE) {
+        return Promise.reject(this.ERROR_ACCOUNT_INACTIVE);
       } else {
         return Promise.resolve(response);
       }
@@ -34,12 +39,16 @@ export class LoginService {
   checkLoggedInUser(sessionId: string): Promise<boolean> {
     const body = { 'method': this.METHOD_CHECK_SESSION_ID, 'data': { 'sessionId': sessionId } };
     return this.http.post(this.registerURL, JSON.stringify(body), { responseType: 'text' }).toPromise().then(response => {
-      if (response === 'true') {
-        return Promise.resolve(true);
-      } else if (response === 'false') {
+      if (response === 'false') {
         return Promise.resolve(false);
       } else {
-        return Promise.resolve(false);
+        try {
+          const user: LoginUserModel = JSON.parse(response);
+          this.currentUser = user;
+          return Promise.resolve(true);
+        } catch {
+          return Promise.resolve(false);
+        }
       }
     }, error => {
       return Promise.resolve(false);
