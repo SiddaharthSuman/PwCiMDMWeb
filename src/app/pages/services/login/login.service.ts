@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginUserModel } from '../../models/login-user.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class LoginService {
@@ -12,7 +13,7 @@ export class LoginService {
   private readonly METHOD_LOGIN_WEB_USER = 'loginWebUser';
   private readonly METHOD_CHECK_SESSION_ID = 'checkSessionId';
 
-  registerURL = 'https://pwcimdm-server.000webhostapp.com/registration.php';
+  registerURL = environment.domain + '/registration.php';
 
   isLoggedIn: boolean;
   currentUser: LoginUserModel;

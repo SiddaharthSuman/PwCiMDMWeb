@@ -1,19 +1,51 @@
+<!-- No active reservations -->
 <div  *ngIf="code">
   <div class="row">
     <div class="col">
       <p>Please scan the below code in the IPhone you want to reserve</p>
     </div>
   </div>
-  <div class="row justify-content-center">
-    <div class="col-3">
+  <div class="row">
+    <div class="col">
       <qrcode [qrdata]="code" [size]="256" [level]="'L'"></qrcode>
     </div>
   </div>
 </div>
-<div *ngIf="!code">
+
+<!-- Active reservations are present -->
+<div *ngIf="isAlreadyInReservation">
   <div class="row">
     <div class="col">
-      <p>Please wait while we fetch your code...</p>
+      <p>Your reservation details are as follows:</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p>Device: {{reservedDevice ? reservedDevice.deviceName : '...'}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p>Start Time: {{activeReservation.startTime | date:'medium'}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p>End Time: {{activeReservation.endTime | date:'medium'}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary" (click)="releaseDevice()">Release device</button>
+    </div>
+  </div>
+</div>
+
+<!-- Placeholder -->
+<div *ngIf="!code && !isAlreadyInReservation">
+  <div class="row">
+    <div class="col">
+      <p>Please wait while we fetch your details...</p>
     </div>
   </div>
 </div>

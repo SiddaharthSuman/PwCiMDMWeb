@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class RegistrationService {
@@ -9,8 +10,8 @@ export class RegistrationService {
 
   private readonly METHOD_REGISTER_WEB_USER = 'registerWebUser';
 
-  decryptorURL = 'https://pwcimdm-server.000webhostapp.com/decryptor.php';
-  registerURL = 'https://pwcimdm-server.000webhostapp.com/registration.php';
+  decryptorURL = environment.domain + '/decryptor.php';
+  registerURL = environment.domain + '/registration.php';
 
   constructor(private http: HttpClient) { }
 
