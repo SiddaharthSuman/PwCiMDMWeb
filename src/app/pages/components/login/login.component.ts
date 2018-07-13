@@ -10,6 +10,7 @@ import { LoginUserModel } from '../../models/login-user.model';
 })
 export class LoginComponent implements OnInit {
 
+  isLoggingIn: boolean;
   constructor(private service: LoginService, private router: Router) { }
 
   ngOnInit() {
@@ -17,12 +18,15 @@ export class LoginComponent implements OnInit {
 
   loginUser(username: string, password: string) {
 
+    this.isLoggingIn = true;
+
     if (username.trim().length === 0 || password.trim().length === 0) {
       alert('Please enter username and password both!');
       return;
     }
 
     this.service.loginUser(username, password).then(response => {
+      this.isLoggingIn = false;
       try {
         const code = JSON.parse(response);
         localStorage.setItem('sessionId', code.code);
@@ -32,6 +36,9 @@ export class LoginComponent implements OnInit {
       } catch {
         console.log('Error while converting response to json: ' + response);
       }
-    }, error => alert(error));
+    }, error => {
+      this.isLoggingIn = false;
+      alert(error);
+    });
   }
 }

@@ -7,6 +7,6 @@
     <label for="exampleInputPassword1">Password</label>
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" #password>
   </div>
-  <button type="button" class="btn btn-primary" (click)="loginUser(username.value, password.value)">Login</button>
+  <button type="button" class="btn btn-primary" (click)="loginUser(username.value, password.value)" [disabled]="isLoggingIn">Login</button>
   <a routerLink="/Register" routerLinkActive="active" style="margin-left: 1rem;">Register</a>
 </form>
