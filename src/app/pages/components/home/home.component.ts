@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
   reservations: ReservationModel[];
   isAlreadyInReservation: boolean;
   reservedDevice: DeviceModel;
+  undergoingRelease = false;
+  isDeviceReleased = false;
 
   constructor(private reservationService: ReservationService, private loginService: LoginService) { }
 
@@ -50,6 +52,12 @@ export class HomeComponent implements OnInit {
 
   releaseDevice() {
     console.log('Device Released!');
+    this.undergoingRelease = true;
+    this.reservationService.releaseDevice(this.activeReservation).then(response => {
+      this.undergoingRelease = false;
+      this.isDeviceReleased = true;
+      this.isAlreadyInReservation = false;
+    });
   }
 
 }

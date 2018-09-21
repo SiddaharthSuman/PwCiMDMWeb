@@ -15,6 +15,7 @@ export class ReservationService {
   private readonly METHOD_GET_ACTIVE_RESERVATIONS = 'getActiveWebReservations';
   private readonly METHOD_GET_NEW_CODE = 'getNewCode';
   private readonly METHOD_GET_DEVICE_BY_ID = 'getDeviceByTableId';
+  private readonly METHOD_RELEASE_DEVICE = 'releaseDevice';
 
   reservationURL = environment.domain + '/admin/reservation.php';
   adminURL = environment.domain + '/admin/admin.php';
@@ -45,5 +46,10 @@ export class ReservationService {
         }
       }
     });
+  }
+
+  releaseDevice(reservation: ReservationModel){
+    const body = { 'method': this.METHOD_RELEASE_DEVICE, 'data': { 'reservation': reservation } };
+    return this.http.post(this.reservationURL, JSON.stringify(body), { responseType: 'text' }).toPromise();
   }
 }

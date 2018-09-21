@@ -2,7 +2,7 @@
 <div  *ngIf="code">
   <div class="row">
     <div class="col">
-      <p>Please scan the below code in the IPhone you want to reserve</p>
+      <p>Please scan the below code in the iPhone you want to reserve</p>
     </div>
   </div>
   <div class="row">
@@ -36,13 +36,21 @@
   </div>
   <div class="row">
     <div class="col">
-      <button type="button" class="btn btn-primary" (click)="releaseDevice()">Release device</button>
+      <button type="button" class="btn btn-primary" (click)="releaseDevice()" [disabled]="">Release device</button>
     </div>
   </div>
 </div>
 
+<div *ngIf="isDeviceReleased">
+  <div class="row">
+    <div class="col">
+      <p>Device has been released! Thank you.</p>
+    </div>
+  </div>    
+</div>
+
 <!-- Placeholder -->
-<div *ngIf="!code && !isAlreadyInReservation">
+<div *ngIf="!code && !isAlreadyInReservation && !isDeviceReleased">
   <div class="row">
     <div class="col">
       <p>Please wait while we fetch your details...</p>
